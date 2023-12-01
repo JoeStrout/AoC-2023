@@ -271,6 +271,11 @@ end function
 // not matter) of 'k' items from this list.
 // Reference: https://stackoverflow.com/questions/29910312
 list.combinations = function(k)
+	if k == null then
+		print "list.combinations: parameter k (combination size) is required"
+		print "  and should be <= list.len (" + self.len + " in this case)"
+		return null
+	end if
 	result = []
 	s = range(0, k-1)	// index sequence (what items we select from self)
 	result.push self.select(s)
@@ -289,6 +294,7 @@ list.combinations = function(k)
 		// now, grab the selected subset
 		result.push self.select(s)
 	end while
+	return result
 end function	
 string.combinations = @list.combinations // works for both! :)
 
@@ -481,6 +487,16 @@ runUnitTests = function
 	a = ["zero", "one", "two"]
 	a.swap 1, 2
 	assertEqual a, ["zero", "two", "one"]
+
+	testing = "list.combinations"
+	a = [1,2,3]
+	combos = a.combinations(2)
+	assertEqual combos, [[1,2], [1,3], [2,3]]
+
+	testing = "list.permutations"
+	a = [1,2,3]
+	perms = a.permutations
+	assertEqual perms, [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
 
 	testing = "string.between"
 	s = "foobarbaz"
