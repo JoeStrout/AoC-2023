@@ -1,11 +1,4 @@
 import "stringUtil"
-import "mapUtil"
-import "listUtil"
-import "mathUtil"
-//import "aoc"
-
-resultA = []
-resultB = []
 
 if 1 then fname = "input.txt" else fname = "example.txt"
 lines = file.readLines(fname)
@@ -16,6 +9,7 @@ end if
 if not lines[-1] then lines.pop
 
 names = "zero one two three four five six seven eight nine".split
+results = []
 
 for line in lines
 	digit0 = null
@@ -47,12 +41,13 @@ for line in lines
 			digit1 = line[i].val
 		end if
 		if digit1 != null then break
-	end for		
-	valueA = digit0*10 + digit1
+	end for
+	
+	// compute and save the value
+	value = digit0*10 + digit1
 
-	print line + ": " + valueA
-	resultA.push valueA
+	print line + ": " + value
+	results.push value
 end for
 
-print "final answer (part A): " + resultA.sum
-// Also available: list.min, list.max, list.mean
+print "final answer (part A): " + results.sum

@@ -130,10 +130,10 @@ list.pad = function(length, padValue=null, cutIfTooLong=true)
 	return self
 end function
 
-list.padToUniform = function(self)
+list.padToUniform = function(self, padValue=null)
 	maxLen = self.maxElementLen
 	for i in self.indexes
-		self[i] = self[i].pad(maxLen)
+		self[i] = self[i].pad(maxLen, padValue)
 	end for
 end function
 
