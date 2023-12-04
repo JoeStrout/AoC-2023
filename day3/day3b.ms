@@ -56,6 +56,4 @@ for kv in gears
 	if kv.value.len == 2 then resultB.push kv.value.product	
 end for
 
-print "final answer (part A): " + resultA.sum
 print "final answer (part B): " + resultB.sum
-// Also available: list.min, list.max, list.mean
