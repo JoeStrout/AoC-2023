@@ -66,6 +66,11 @@ Span.endVal = 0
 // Make a span from two values, or from a single string
 // which we will parse as "start-end" numeric values.
 Span.make = function(startVal, endVal)
+	if endVal < startVal then
+		print "WTF? Span.make(" + startVal + ", " + endVal + ") at:"
+		pprint stackTrace
+		exit
+	end if
 	if startVal isa string and endVal == null then
 		parts = startVal.split("-")
 		startVal = parts[0].trim.val
@@ -74,6 +79,13 @@ Span.make = function(startVal, endVal)
 	result = new Span
 	result.startVal = startVal
 	result.endVal = endVal
+	return result
+end function
+
+Span.makeStartCount = function(startVal, count)
+	result = new Span
+	result.startVal = startVal
+	result.endVal = startVal + count - 1
 	return result
 end function
 
@@ -111,6 +123,15 @@ Span.intersection = function(other, returnNullIfEmpty=false)
 	  min(self.endVal, other.endVal))
 	if result.isEmpty and returnNullIfEmpty then return null
 	return result
+end function
+
+Span.shift = function(delta)
+	self.startVal += delta
+	self.endVal += delta
+end function
+
+Span.shifted = function(delta)
+	return Span.make(self.startVal + delta, self.endVal + delta)
 end function
 
 list.maxElementLen = function(self)
