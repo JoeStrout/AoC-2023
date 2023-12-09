@@ -82,3 +82,4 @@ print "final answer (part B): " + resultB.sum
 
 // 247563175 is too high
 // 247171022 still too high :(
+// 246894760
