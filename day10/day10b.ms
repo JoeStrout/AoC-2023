@@ -14,7 +14,7 @@ pipeDirs = [
 	[[1,0],  [0,-1]],	// F
 	[], [] ]			// . and S
 
-if 0 then
+if 1 then
 	fileName = "input.txt"
 	width = 140
 	height = 140
