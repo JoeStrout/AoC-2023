@@ -38,6 +38,9 @@ dy = [0, 1, 0, -1]
 // For our state representation we will use: [x, y, dir, straightMoves]
 // (where straightMoves is 1-3, how many times we've moved straight).
 
+clear
+gfx.scale = 3; gfx.scrollX = -500
+
 finder = new search.Search
 finder.heuristic = @search.manhattanDistance
 finder.neighbors = function(state)
@@ -61,9 +64,12 @@ finder.neighbors = function(state)
 	return result
 end function
 
+t0 = time
 path = finder.findPath(startPos+[0, 0], endPos)
+t1 = time
 for point in path[1:]	// (skipping the initial entry cell!)
 	resultA.push cityMap[point[1]][point[0]]
 end for
 
 print "final answer (part A): " + resultA.sum
+print "time: " + (t1 - t0)

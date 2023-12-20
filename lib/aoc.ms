@@ -12,6 +12,20 @@ globals.max = function(a, b)
 	if a >= b then return a else return b
 end function
 
+gcd = function(a, b)
+    while b
+        temp = b
+        b = a % b
+        a = temp
+    end while
+    return abs(a)
+end function
+
+lcm = function(a,b)
+    if not a and not b then return 0
+    return abs(a * b) / gcd(a, b)
+end function
+
 // map.applyToValues: applies a function to all values, in place.
 map.applyToValues = function(func)
 	for kv in self

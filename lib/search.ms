@@ -81,6 +81,8 @@ Search.findPath = function(startState, endState)
 	lineCount = 0
 	
 	bestHeur = self.heuristic(startState, endState)
+	startTime = time
+	nextDebugTime = time + 10
 	while toDo
 		self.steps = self.steps + 1
 		currentEstTotal = estCost.pull
@@ -91,7 +93,7 @@ Search.findPath = function(startState, endState)
 			break	// success!		
 		end if
 		//print "checking " + current
-		gfx.setPixel current[0], current[1], color.silver	// HACK
+		//gfx.setPixel current[0], current[1], color.silver	// HACK
 		
 		currentActualCost = actualCost[current]
 		
@@ -102,16 +104,17 @@ Search.findPath = function(startState, endState)
 			// calculate actual and estimated-total cost for this neighbor
 			cost = currentActualCost + incrementalCost
 			heur = self.heuristic(nextState, endState)
-			if heur < bestHeur then
-			print "New best heur: " + heur + " (at cost: " + cost + ")"
-				bestHeur = heur
-			end if
+//			if heur < bestHeur then
+//				print "New best heur: " + heur + " (at cost: " + cost + ")"
+//				bestHeur = heur
+//			end if
 			estimate = cost + heur
 						
 			// if we already knew a cheaper way to get to this neighbor,
 			// or we have already done this neighbor, then skip to the next one
-			idx = toDo.indexOf(nextState)
-			if actualCost.hasIndex(nextState) or (idx != null and estCost[idx] < estimate) then continue
+//			idx = toDo.indexOf(nextState)
+//			if actualCost.hasIndex(nextState) or (idx != null and estCost[idx] < estimate) then continue
+			if actualCost.hasIndex(nextState) then continue
 			
 			// otherwise, insert into our check list in estimated-total-cost order
 			i = insertPosInSortedList(estCost, estimate)
@@ -119,8 +122,13 @@ Search.findPath = function(startState, endState)
 			estCost.insert i, estimate
 			camefrom[nextState] = current
 			actualCost[nextState] = cost
+//			gfx.setPixel nextState[0], nextState[1], color.yellow
 //			print "inserted " + nextState + " with est. " + estimate + " and cost " + cost
 		end for
+		if time > nextDebugTime then
+			print "Time " + (time - startTime) + ": actualCost.len=" + actualCost.len
+			nextDebugTime = time + 10
+		end if
 //		key.get
 		current = null
 	end while
